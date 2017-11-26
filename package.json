@@ -1,0 +1,13 @@
+{
+  "name": "telegramback",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "babel-node main --present-env"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "config": "^1.28.0",
+    "node-telegram-bot-api": "^0.29.0"
+  }
+}
