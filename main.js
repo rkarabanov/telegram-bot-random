@@ -1,4 +1,3 @@
-const http = require('http');
 const express = require('express');
 
 const TelegramBot = require('node-telegram-bot-api');
@@ -14,7 +13,6 @@ const CHARS = config.get("chars");
 
 
 const app = express();
-app.use(express.logger());
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
@@ -205,11 +203,11 @@ function sendMessageGetInfoCoin(msg, err) {
     bot.sendMessage(id, "⚖ если у вас нет под рукой монетки, чтобы рассудить спор, то киньте нашу монетку отправив:\n /c");
 }
 
-// setTimeout(function wakeUp() {
-//     request("https://guarded-stream-85939.herokuapp.com", function() {
-//         console.log("WAKE UP DYNO");
-//     });
-//     return setTimeout(wakeUp, 1200000);
-// }, 1200000);
+setTimeout(function wakeUp() {
+    request("https://guarded-stream-85939.herokuapp.com", function() {
+        console.log("WAKE UP DYNO");
+    });
+    return setTimeout(wakeUp, 1200000);
+}, 1200000);
 
 app.listen(process.env.PORT ||5000, () => console.log('Example app listening on port 5000!'));
