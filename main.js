@@ -1,3 +1,6 @@
+const express = require('express');
+const app = express();
+
 const TelegramBot = require('node-telegram-bot-api');
 const config = require('config');
 
@@ -9,6 +12,7 @@ const SPECIAL_SYMBOLS = config.get("specialSymbols");
 const DIGITS = config.get("digits");
 const CHARS = config.get("chars");
 
+app.get('/', (req, res) => res.send('Hello World!'));
 
 const bot = new TelegramBot(TOKEN, {polling: true});
 
@@ -196,3 +200,5 @@ function sendMessageGetInfoCoin(msg, err) {
     const {chat: {id}} = msg;
     bot.sendMessage(id, "⚖ если у вас нет под рукой монетки, чтобы рассудить спор, то киньте нашу монетку отправив:\n /c");
 }
+
+app.listen(process.env.PORT ||5000, () => console.log('Example app listening on port 3000!'))
