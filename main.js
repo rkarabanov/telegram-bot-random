@@ -91,12 +91,12 @@ bot.onText(/\/n (.+)/, (msg, [source, match]) => {
         sendMessageNumber(msg, components);
     }
     else {
-        sendMessageNumber(msg, "", "Неверый формат, нужно:\n/n [число, сколько чисел вывести] [число, от] [число, до]");
+        sendMessageNumber(msg, "", "Неверый формат, нужно:\n/n [число, сколько чисел вывести до 100] [положительное число, от] [число, до]");
     }
 });
 
 bot.onText(/\/n*$/, (msg) => {
-    sendMessageNumber(msg, "", "Неверый формат, нужно:\n/n [число, сколько чисел вывести] [число, от] [число, до]");
+    sendMessageNumber(msg, "", "Неверый формат, нужно:\n/n [число, сколько чисел вывести до 100] [положительное число, от] [число, до]");
 });
 
 
@@ -201,4 +201,11 @@ function sendMessageGetInfoCoin(msg, err) {
     bot.sendMessage(id, "⚖ если у вас нет под рукой монетки, чтобы рассудить спор, то киньте нашу монетку отправив:\n /c");
 }
 
-app.listen(process.env.PORT ||5000, () => console.log('Example app listening on port 3000!'))
+setTimeout(function wakeUp() {
+    request("https://guarded-stream-85939.herokuapp.com", function() {
+        console.log("WAKE UP DYNO");
+    });
+    return setTimeout(wakeUp, 1200000);
+}, 1200000);
+
+app.listen(process.env.PORT ||5000, () => console.log('Example app listening on port 3000!'));
