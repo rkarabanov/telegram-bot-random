@@ -1,5 +1,4 @@
 const express = require('express');
-
 const TelegramBot = require('node-telegram-bot-api');
 const config = require('config');
 
@@ -10,6 +9,7 @@ const COIN = config.get("coin");
 const SPECIAL_SYMBOLS = config.get("specialSymbols");
 const DIGITS = config.get("digits");
 const CHARS = config.get("chars");
+const {infoNumbers, wrongFormat, infoPasswords} = require('consts');
 
 
 const app = express();
@@ -93,12 +93,12 @@ bot.onText(/\/n (.+)/, (msg, [source, match]) => {
         sendMessageNumber(msg, components);
     }
     else {
-        sendMessageNumber(msg, "", "Неверый формат, нужно:\n/n [число, сколько чисел вывести до 100] [положительное число, от] [число, до]");
+        sendMessageNumber(msg, "", wrongFormat + infoNumbers);
     }
 });
 
 bot.onText(/\/n*$/, (msg) => {
-    sendMessageNumber(msg, "", "Неверый формат, нужно:\n/n [число, сколько чисел вывести до 100] [положительное число, от] [число, до]");
+    sendMessageNumber(msg, "", wrongFormat + infoNumbers);
 });
 
 
@@ -115,7 +115,7 @@ function sendMessagePassword(msg, components, ...err) {
         while (i < length) {
             ++i;
             let bufferStr;
-            if ((isDigits || isSpecialSymbols) && ((i + (isSpecialSymbols?1:0) + (isDigits?1:0)) > length)) {
+            if ((isDigits || isSpecialSymbols) && ((i + (isSpecialSymbols ? 1 : 0) + (isDigits ? 1 : 0)) > length)) {
                 if (isDigits) {
                     bufferStr = DIGITS;
                 }
@@ -149,17 +149,17 @@ bot.onText(/\/p (.+)/, (msg, [source, match]) => {
         sendMessagePassword(msg, components);
     }
     else {
-        sendMessagePassword(msg, "", "Неверый формат, нужно:\n/p [число, сколько символов, от 6 - до 18] +/-[включая цифры] +/-[включая спец. символы]");
+        sendMessagePassword(msg, "", wrongFormat + infoPasswords);
     }
 });
 
 bot.onText(/\/p*$/, (msg) => {
-    sendMessagePassword(msg, "", "Неверый формат, нужно:\n/p [число, сколько символов, от 6 - до 18] +/-[включая цифры] +/-[включая спец. символы]");
+    sendMessagePassword(msg, "", wrongFormat + infoPasswords);
 });
 
 bot.onText(/\/aim*$/, (msg) => {
     const {chat: {id}} = msg;
-    bot.sendMessage(id, "🎯 " + "Данный бот является лабораторной работой Карабанова Романа");
+    bot.sendMessage(id, "🎯 " + "Данный бот является работой Карабанова Романа");
 });
 
 bot.onText(/\/thanks*$/, (msg) => {
@@ -185,7 +185,7 @@ function sendMessageAnswer(msg, ...err) {
 
 function sendMessageGetInfoNumber(msg) {
     const {chat: {id}} = msg;
-    bot.sendMessage(id, "💯 вывод случайных натуральных чисел из заданного диапозона, формат ввода:\n /n [число, сколько чисел вывести] [число, от] [число, до]");
+    bot.sendMessage(id, "💯 вывод случайных натуральных чисел из заданного диапозона, формат ввода:\n" + infoNumbers);
 }
 
 function sendMessageGetInfoAnswer(msg) {
@@ -195,7 +195,7 @@ function sendMessageGetInfoAnswer(msg) {
 
 function sendMessageGetInfoPass(msg, err) {
     const {chat: {id}} = msg;
-    bot.sendMessage(id, "🔐 генератор пароля:\n /p [число, сколько символов, от 6 - до 18] +/-[включая цифры] +/-[включая спец. символы]");
+    bot.sendMessage(id, "🔐 генератор пароля:\n "+ + infoPasswords);
 }
 
 function sendMessageGetInfoCoin(msg, err) {
@@ -204,10 +204,10 @@ function sendMessageGetInfoCoin(msg, err) {
 }
 
 setTimeout(function wakeUp() {
-    request("https://guarded-stream-85939.herokuapp.com", function() {
+    request("https://guarded-stream-85939.herokuapp.com", function () {
         console.log("WAKE UP DYNO");
     });
     return setTimeout(wakeUp, 1200000);
 }, 1200000);
 
-app.listen(process.env.PORT ||5000, () => console.log('Example app listening on port 5000!'));
+app.listen(process.env.PORT || 5000, () => console.log('Example app listening on port 5000!'));
