@@ -91,7 +91,7 @@ function sendMessageNumber(msg, components, ...err) {
 bot.onText(/\/n (.+)/, (msg, [source, match]) => {
     const components = match.split(" ");
 
-    if (components.length === 3 && components.every(isNature) && (+components[1]) < (+components[2])) {
+    if (components.length === 3 && +components[1] && +components[0]<=100 && components.every(isNature) && (+components[1]) < (+components[2])) {
         sendMessageNumber(msg, components);
     }
     else {
