@@ -9,7 +9,9 @@ const COIN = config.get("coin");
 const SPECIAL_SYMBOLS = config.get("specialSymbols");
 const DIGITS = config.get("digits");
 const CHARS = config.get("chars");
-const {infoNumbers, wrongFormat, infoPasswords} = require('consts');
+const infoNumbers = " /n [число, сколько чисел вывести до 100] [число, от] [число, до]";
+const wrongFormat = "Неверый формат, нужно:\n ";
+const infoPasswords = "/p [число, сколько символов, от 6 - до 18] +/-[включая цифры] +/-[включая спец. символы]";
 
 
 const app = express();
@@ -195,7 +197,7 @@ function sendMessageGetInfoAnswer(msg) {
 
 function sendMessageGetInfoPass(msg, err) {
     const {chat: {id}} = msg;
-    bot.sendMessage(id, "🔐 генератор пароля:\n "+ + infoPasswords);
+    bot.sendMessage(id, "🔐 генератор пароля:\n " + infoPasswords);
 }
 
 function sendMessageGetInfoCoin(msg, err) {
